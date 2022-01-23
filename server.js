@@ -36,6 +36,10 @@ app.get('/api/:date', function (req, res) {
     inputDate = parseInt(inputDate);
     resObj['unix'] = inputDate;
     resObj['utc'] = new Date(inputDate).toUTCString();
+  } else if (inputDate == '') {
+    const currentTime = moment()
+    resObj['unix'] = new Date(currentTime).getTime();
+    resObj['utc'] = new Date(currentTime).toUTCString();
   } else {
     resObj['error'] = 'Invalid Date';
   }
