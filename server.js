@@ -40,7 +40,7 @@ app.get('/api/:date', function (req, res) {
   let resObj = {};
   let inputDate = req.params.date;
 
-  if (moment(inputDate, 'YYYY-MM-DD', true).isValid()) {
+  if (moment(inputDate).isValid()) {
     resObj['unix'] = new Date(inputDate).getTime();
     resObj['utc'] = new Date(inputDate).toUTCString();
   } else if (!isNaN(parseInt(inputDate))) {
