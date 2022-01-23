@@ -32,11 +32,12 @@ app.get('/api/:date', function (req, res) {
   if (moment(inputDate, 'YYYY-MM-DD', true).isValid()) {
     resObj['unix'] = new Date(inputDate).getTime();
     resObj['utc'] = new Date(inputDate).toUTCString();
-  } else if (moment(inputDate).isValid()) {
-    //unix format
-    res.json({ successUnix: 'true' });
+  } else if (parseInt(inputDate) !== NaN) {
+    inputDate = parseInt(inputDate);
+    resObj['unix'] = inputDate;
+    resObj['utc'] = new Date(inputDate).toUTCString();
   } else {
-    res.json({ error: 'Invalid Date' });
+    resObj['error'] = 'Invalid Date';
   }
   res.json(resObj);
 });
