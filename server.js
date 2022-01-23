@@ -24,26 +24,31 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-// endpoint for date
+// API endpoint for empty params...
+app.get('/api', function (req, res) {
+  let resObj = {};
+  const currentTime = moment();
+  resObj['unix'] = new Date(currentTime).getTime();
+  resObj['utc'] = new Date(currentTime).toUTCString();
+  res.json(resObj);
+});
+
+// API endpoint for date...
 app.get('/api/:date', function (req, res) {
   let resObj = {};
   let inputDate = req.params.date;
 
-  // if (moment(inputDate, 'YYYY-MM-DD', true).isValid()) {
-  //   resObj['unix'] = new Date(inputDate).getTime();
-  //   resObj['utc'] = new Date(inputDate).toUTCString();
-  // } else if (!isNaN(parseInt(inputDate))) {
-  //   inputDate = parseInt(inputDate);
-  //   resObj['unix'] = inputDate;
-  //   resObj['utc'] = new Date(inputDate).toUTCString();
-  // } else if (inputDate == '') {
-  //   const currentTime = moment()
-  //   resObj['unix'] = new Date(currentTime).getTime();
-  //   resObj['utc'] = new Date(currentTime).toUTCString();
-  // } else {
-  //   resObj['error'] = 'Invalid Date';
-  // }
-  res.json({'type' : (typeof inputDate)});
+  if (moment(inputDate, 'YYYY-MM-DD', true).isValid()) {
+    resObj['unix'] = new Date(inputDate).getTime();
+    resObj['utc'] = new Date(inputDate).toUTCString();
+  } else if (!isNaN(parseInt(inputDate))) {
+    inputDate = parseInt(inputDate);
+    resObj['unix'] = inputDate;
+    resObj['utc'] = new Date(inputDate).toUTCString();
+  } else {
+    resObj['error'] = 'Invalid Date';
+  }
+  res.json(resObj);
 });
 
 // listen for requests :)
