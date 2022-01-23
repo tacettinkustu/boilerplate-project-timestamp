@@ -24,19 +24,21 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-let resObj = {};
 // endpoint for date
 app.get('/api/:date', function (req, res) {
+  let resObj = {};
   let inputDate = req.params.date;
+
   if (moment(inputDate, 'YYYY-MM-DD', true).isValid()) {
-    res.json({ success: 'true' });
+    resObj['unix'] = new Date(inputDate).getTime();
+    resObj['utc'] = new Date(inputDate).toUTCString();
   } else if (moment(inputDate).isValid()) {
     //unix format
     res.json({ successUnix: 'true' });
   } else {
     res.json({ error: 'Invalid Date' });
   }
-  res.json(input);
+  res.json(resObj);
 });
 
 // listen for requests :)
