@@ -24,7 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+let resObj = {}
+// endpoint for date
+app.get("/api/timestamp/:date", function (req, res) {
+  let input = req.params.date;
+  res.json(input);
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
